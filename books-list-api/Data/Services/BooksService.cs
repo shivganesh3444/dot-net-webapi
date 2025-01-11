@@ -28,5 +28,43 @@ namespace books_list_api.Data.Services
             _context.Books.Add(bookSave);
             _context.SaveChanges();
         }
+
+        public List<Book> GetAllBooks() => _context.Books.ToList();
+
+        public Book? GetBook(int id) => _context.Books.FirstOrDefault(x => x.Id == id);
+
+        public void UpdateBook(int id, BookVM book) {
+
+            Book? _book = _context.Books.FirstOrDefault(x => x.Id == id);
+
+            if (_book != null) {
+               
+                    _book.Title = book.Title;
+                    _book.Description = book.Description;
+                    _book.Author = book.Author;
+                    _book.CoverUrl = book.CoverUrl;
+                    _book.Genre = book.Genre;
+                    _book.IsRead = book.IsRead;
+                    _book.DateRead = book.DateRead;
+                    _book.Rate = book.Rate;
+                    _book.DateAdded = DateTime.Now;
+
+                    _context.Update(_book);
+                    _context.SaveChanges();
+            };
+
+        }
+        
+
+        public void DeleteBook(int id)
+        {
+            Book? _book = _context.Books.FirstOrDefault(x => x.Id == id);
+
+            if (_book != null)
+            {
+                _context.Books.Remove(_book);
+                _context.SaveChanges();
+            }
+        }
     }
 }
