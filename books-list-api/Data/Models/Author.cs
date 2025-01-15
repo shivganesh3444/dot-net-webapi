@@ -3,7 +3,7 @@
     public class Author
     {
         public int Id { get; set; }
-        private string Fullname { get; set; }
+        public string Fullname { get; set; }
 
         //Navigation properties
 
