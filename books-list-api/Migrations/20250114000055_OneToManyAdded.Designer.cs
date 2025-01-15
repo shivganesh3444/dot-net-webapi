@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using books_list_api.Data;
 
@@ -11,9 +12,11 @@ using books_list_api.Data;
 namespace books_list_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250114000055_OneToManyAdded")]
+    partial class OneToManyAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,19 +24,6 @@ namespace books_list_api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("books_list_api.Data.Models.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Authors");
-                });
 
             modelBuilder.Entity("books_list_api.Data.Models.Book", b =>
                 {
@@ -85,29 +75,6 @@ namespace books_list_api.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("books_list_api.Data.Models.Book_Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AuthorID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorID");
-
-                    b.HasIndex("BookID");
-
-                    b.ToTable("Book_Authors");
-                });
-
             modelBuilder.Entity("books_list_api.Data.Models.Publisher", b =>
                 {
                     b.Property<int>("Id")
@@ -122,7 +89,7 @@ namespace books_list_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publishers");
+                    b.ToTable("Publisher");
                 });
 
             modelBuilder.Entity("books_list_api.Data.Models.Book", b =>
@@ -134,35 +101,6 @@ namespace books_list_api.Migrations
                         .IsRequired();
 
                     b.Navigation("Publishers");
-                });
-
-            modelBuilder.Entity("books_list_api.Data.Models.Book_Author", b =>
-                {
-                    b.HasOne("books_list_api.Data.Models.Author", "Author")
-                        .WithMany("Book_Authors")
-                        .HasForeignKey("AuthorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("books_list_api.Data.Models.Book", "Book")
-                        .WithMany("Book_Authors")
-                        .HasForeignKey("BookID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("books_list_api.Data.Models.Author", b =>
-                {
-                    b.Navigation("Book_Authors");
-                });
-
-            modelBuilder.Entity("books_list_api.Data.Models.Book", b =>
-                {
-                    b.Navigation("Book_Authors");
                 });
 
             modelBuilder.Entity("books_list_api.Data.Models.Publisher", b =>
