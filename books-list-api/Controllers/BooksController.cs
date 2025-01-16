@@ -30,10 +30,10 @@ namespace books_list_api.Controllers
             return Ok(books);
         }
 
-        [HttpPost("add-book")]
-        public IActionResult AddBook([FromBody]BookVM book)
+        [HttpPost("add-bookauthor")]
+        public IActionResult AddBookAuthor([FromBody]BookVM book)
         {
-            _booksService.AddBook(book);
+            _booksService.AddBookAuthor(book);
             return Ok();
         }
 
