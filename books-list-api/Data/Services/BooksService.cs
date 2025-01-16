@@ -10,23 +10,39 @@ namespace books_list_api.Data.Services
             _context = context;
         }
 
-        public void AddBook(BookVM book)
+        public void AddBookAuthor(BookVM book)
         {
             Book bookSave = new Book()
             {
                 Title = book.Title,
                 Description = book.Description,
-                Author = book.Author,
                 CoverUrl = book.CoverUrl,
                 Genre = book.Genre,
                 IsRead = book.IsRead,
                 DateRead = book.DateRead,
                 Rate = book.Rate,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                PublisherId = book.PublisherId,
             };
             
             _context.Books.Add(bookSave);
             _context.SaveChanges();
+
+            if (bookSave.Id > 0)
+            {
+                foreach (int authorID in book.Authors)
+                {
+                    Book_Author book_Author = new Book_Author()
+                    {
+                        BookID = bookSave.Id,
+                        AuthorID = authorID
+                    };
+
+                    _context.Book_Authors.Add(book_Author);
+                    _context.SaveChanges();
+                }
+            }
+
         }
 
         public List<Book> GetAllBooks() => _context.Books.ToList();
@@ -41,7 +57,6 @@ namespace books_list_api.Data.Services
                
                     _book.Title = book.Title;
                     _book.Description = book.Description;
-                    _book.Author = book.Author;
                     _book.CoverUrl = book.CoverUrl;
                     _book.Genre = book.Genre;
                     _book.IsRead = book.IsRead;

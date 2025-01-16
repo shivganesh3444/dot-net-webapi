@@ -19,7 +19,6 @@ namespace books_list_api.Data
                         DateRead = DateTime.Now,
                         Rate = 21,
                         Genre = "Genre 1",
-                        Author = "Author 1",
                         CoverUrl ="url 1",
                         DateAdded = DateTime.Now,
                     },
@@ -29,7 +28,6 @@ namespace books_list_api.Data
                         Description = "description 2",
                         Rate = 22,
                         Genre = "Genre 2",
-                        Author = "Author 2",
                         CoverUrl = "url 2",
                         DateAdded = DateTime.Now,
                     }
