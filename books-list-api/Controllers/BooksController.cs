@@ -15,11 +15,11 @@ namespace books_list_api.Controllers
             _booksService = booksService;
         }
 
-        [HttpGet("get-book/{id}")]
-        public IActionResult GetBook(int id)
+        [HttpGet("get-book-with-author/{id}")]
+        public IActionResult GetBookWithAuthor(int id)
         {
 
-            Book? book = _booksService.GetBook(id);
+            BookWithAuthorVM? book = _booksService.GetBookWithAuthor(id);
             return Ok(book);
         }
 
