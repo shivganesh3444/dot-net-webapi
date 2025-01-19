@@ -18,5 +18,31 @@ namespace books_list_api.Data.Services
             _dbContext.Publishers.Add(_publisher);
             _dbContext.SaveChanges();
         }
+
+        public PublisherBookVM? GetPublisherWithBook(int publisherId)
+        {
+            PublisherBookVM? publisherWithBook = _dbContext.Publishers.Where(p => p.Id == publisherId)
+                                            .Select(publisher => new PublisherBookVM
+                                            {
+                                                PublisherId = publisher.Id,
+                                                PublisherName = publisher.Name,
+                                                Books = publisher.Books.Select(b => b.Title).ToList()
+                                            }).FirstOrDefault();
+
+            return publisherWithBook;
+        }
+
+        public PublisherAuthorVM? GetPublisherWithAuthor(int publisherId)
+        {
+            PublisherAuthorVM? publisherWithAuthor = _dbContext.Publishers.Where(p => p.Id == publisherId)
+                .Select(publisher => new PublisherAuthorVM { 
+                 PublisherId= publisher.Id,
+                 PublisherName= publisher.Name,
+                 Authors = publisher.Books.Select(b => b.Book_Authors
+                                                        .Select(a => a.Author.Fullname)).ToList()
+                }).FirstOrDefault();
+
+            return publisherWithAuthor;
+        }
     }
 }
