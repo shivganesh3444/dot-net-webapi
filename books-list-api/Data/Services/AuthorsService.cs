@@ -18,5 +18,17 @@ namespace books_list_api.Data.Services
             _dbContext.Authors.Add(_author);
             _dbContext.SaveChanges();
         }
+
+        public AuthorWithBookVM? GetAuthorWithBooks(int authorId)
+        {
+            AuthorWithBookVM? authorWithBook = _dbContext.Authors.Where(a => a.Id == authorId)
+                .Select(author => new AuthorWithBookVM
+                {
+                  Fullname = author.Fullname,
+                  Books = author.Book_Authors.Select(b => b.Book.Title).ToList()
+                }).FirstOrDefault();
+
+            return authorWithBook;
+        }
     }
 }
