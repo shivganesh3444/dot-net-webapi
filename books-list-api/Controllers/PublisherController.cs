@@ -42,6 +42,7 @@ namespace books_list_api.Controllers
         [HttpGet("get-publisher-byId/{publisherId}")]
         public IActionResult GetPublisherById(int publisherId)
         {
+            throw new Exception("This is test exception for built in middleware");
             var _response = _publishersService.GetPublisherById(publisherId);
             if (_response != null)
             {

@@ -1,5 +1,6 @@
 using books_list_api.Data;
 using books_list_api.Data.Services;
+using books_list_api.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +36,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+//built in exception handling
+app.ConfigureBuildInMiddlewareException();
 
 app.MapControllers();
 
