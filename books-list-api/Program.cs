@@ -38,7 +38,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 //built in exception handling
-app.ConfigureBuildInMiddlewareException();
+//app.ConfigureBuildInMiddlewareException();
+
+//Custom exception using middleware
+//app.UseCustomExceptionMiddleware();
 
 app.MapControllers();
 
