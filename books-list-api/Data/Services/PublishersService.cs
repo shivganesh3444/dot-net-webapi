@@ -9,7 +9,7 @@ namespace books_list_api.Data.Services
             _dbContext = dbContext;
         }
 
-        public void AddPublisher(PublisherVM publisher) {
+        public Publisher AddPublisher(PublisherVM publisher) {
             Publisher _publisher = new Publisher()
             {
                 Name = publisher.Name
@@ -17,6 +17,15 @@ namespace books_list_api.Data.Services
 
             _dbContext.Publishers.Add(_publisher);
             _dbContext.SaveChanges();
+
+            return _publisher;
+        }
+
+        public Publisher? GetPublisherById(int publisherId) { 
+           
+            Publisher? publisher = _dbContext.Publishers.Where(p => p.Id == publisherId).FirstOrDefault();
+            
+            return publisher;
         }
 
         public PublisherBookVM? GetPublisherWithBook(int publisherId)
@@ -54,6 +63,10 @@ namespace books_list_api.Data.Services
                 _dbContext.Remove(publisherToRemove);
                 _dbContext.SaveChanges();
             }
-        }
+            else
+            {
+                throw new Exception($"The publisher with id {publisherId} not found");
+            }
+       }
     }
 }

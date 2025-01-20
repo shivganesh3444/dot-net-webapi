@@ -17,8 +17,29 @@ namespace books_list_api.Controllers
         [HttpPost("add-publisher")]
         public IActionResult AddPublisher(PublisherVM publisher)
         {
-            _publishersService.AddPublisher(publisher);
-            return Ok();
+            try
+            {
+                Publisher? publisherCreated = _publishersService.AddPublisher(publisher);
+                return Created(nameof(AddPublisher), publisherCreated);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-publisher-byId/{publisherId}")]
+        public IActionResult GetPublisherById(int publisherId)
+        {
+            var _response = _publishersService.GetPublisherById(publisherId);
+            if (_response != null)
+            {
+                return Ok(_response);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("get-publisher-book/{publisherId}")]
@@ -37,8 +58,25 @@ namespace books_list_api.Controllers
 
         [HttpDelete("delete-publisher/{publisherId}")]
         public IActionResult RemovePublisher(int publisherId) {
-            _publishersService.RemovePublisher(publisherId);
-            return Ok();
+            try
+            {
+               // throw new ArithmeticException("test exception");
+                _publishersService.RemovePublisher(publisherId);
+                return Ok();
+            }
+            catch(ArithmeticException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+
+            }
+           
         }
 
 
