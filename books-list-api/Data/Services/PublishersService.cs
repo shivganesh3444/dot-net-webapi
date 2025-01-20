@@ -44,5 +44,16 @@ namespace books_list_api.Data.Services
 
             return publisherWithAuthor;
         }
+
+        public void RemovePublisher(int publisherId)
+        {
+            Publisher? publisherToRemove =
+                     _dbContext.Publishers.Where(p => p.Id == publisherId).FirstOrDefault();
+
+            if (publisherToRemove != null) {
+                _dbContext.Remove(publisherToRemove);
+                _dbContext.SaveChanges();
+            }
+        }
     }
 }
