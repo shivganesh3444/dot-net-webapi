@@ -1,7 +1,9 @@
 ﻿using books_list_api.Data.Models;
 using books_list_api.Data.Services;
+using books_list_api.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace books_list_api.Controllers
 {
@@ -19,8 +21,17 @@ namespace books_list_api.Controllers
         {
             try
             {
+                if (StringStartWithNumber(publisher.Name)) throw new PublisherNameException(
+                    "The publisher start with number",
+                    publisher.Name
+                    );
+
                 Publisher? publisherCreated = _publishersService.AddPublisher(publisher);
                 return Created(nameof(AddPublisher), publisherCreated);
+            }
+            catch(PublisherNameException ex)
+            {
+                return BadRequest($"{ex.Message}, {ex._publisherName}");
             }
             catch (Exception ex)
             {
@@ -79,6 +90,9 @@ namespace books_list_api.Controllers
            
         }
 
-
+        private bool StringStartWithNumber(string name)
+        {
+            return Regex.IsMatch(name, @"^\d");
+        }
     }
 }
