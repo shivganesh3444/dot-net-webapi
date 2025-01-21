@@ -1,4 +1,5 @@
-﻿using books_list_api.Data.Models;
+﻿using books_list_api.ActionResult;
+using books_list_api.Data.Models;
 using books_list_api.Data.Services;
 using books_list_api.Exceptions;
 using Microsoft.AspNetCore.Http;
@@ -40,14 +41,15 @@ namespace books_list_api.Controllers
         }
 
         [HttpGet("get-publisher-byId/{publisherId}")]
-        public IActionResult GetPublisherById(int publisherId)
+        public ActionResult<Publisher> GetPublisherById(int publisherId)
         {
             //throw new Exception("This is test exception for custom exception middleware");
             
             var _response = _publishersService.GetPublisherById(publisherId);
             if (_response != null)
             {
-                return Ok(_response);
+                //return Ok(_response);
+                return _response;
             }
             else
             {
@@ -91,6 +93,35 @@ namespace books_list_api.Controllers
             }
            
         }
+
+        [HttpGet("get-all-publisher")]
+        public CustomActionResultType GetAllPublisher()
+        {
+            List<Publisher> publishers = _publishersService.GetAllPublishers();
+            if(publishers!=null && publishers.Count > 0)
+            {
+                //return publishers;
+
+                CustomActionResultVM customActionResultVM = new CustomActionResultVM()
+                {
+                    Publishers = publishers
+                };
+                return new CustomActionResultType(customActionResultVM);
+               
+            }
+            else
+            {
+                // return NotFound();
+
+                CustomActionResultVM customActionResultVM = new CustomActionResultVM()
+                {
+                    Exception = new Exception("This exception is comming from customreturn type")
+                };
+                return new CustomActionResultType(customActionResultVM);
+            }
+           
+        }
+
 
         private bool StringStartWithNumber(string name)
         {
