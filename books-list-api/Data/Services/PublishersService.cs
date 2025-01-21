@@ -68,5 +68,10 @@ namespace books_list_api.Data.Services
                 throw new Exception($"The publisher with id {publisherId} not found");
             }
        }
+
+        public List<Publisher> GetAllPublishers()
+        {
+            return _dbContext.Publishers.ToList();
+        }
     }
 }
