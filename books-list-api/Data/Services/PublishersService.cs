@@ -1,4 +1,5 @@
 ﻿using books_list_api.Data.Models;
+using books_list_api.Data.Paging;
 
 namespace books_list_api.Data.Services
 {
@@ -69,9 +70,37 @@ namespace books_list_api.Data.Services
             }
        }
 
-        public List<Publisher> GetAllPublishers()
+        public List<Publisher> GetAllPublishers(string sortBy, string searchString, int? pageNumber)
         {
-            return _dbContext.Publishers.ToList();
+            var allPublishers = _dbContext.Publishers.OrderBy(p => p.Name).ToList();
+
+            //sorting
+            if (!String.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy) {
+                    case "name_desc":
+                        allPublishers = allPublishers.OrderByDescending(p => p.Name).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //filtering
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                allPublishers = allPublishers.Where(p => p.Name.Contains(searchString,
+                    StringComparison.CurrentCultureIgnoreCase
+                    )).ToList();
+            }
+
+            //pagination
+
+            int pageSize = 5;
+
+            allPublishers = PaginatedList<Publisher>.Created(allPublishers.AsQueryable(), pageNumber ?? 1, pageSize);
+
+            return allPublishers;
         }
     }
 }
