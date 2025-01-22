@@ -27,7 +27,10 @@ builder.Services.AddApiVersioning(builder =>
 {
     builder.DefaultApiVersion = new ApiVersion(1, 0);
     builder.AssumeDefaultVersionWhenUnspecified = true;
-    builder.ApiVersionReader = new HeaderApiVersionReader("custom-version");
+    // //API header versioning configuration
+    //builder.ApiVersionReader = new HeaderApiVersionReader("custom-version");
+    // //API content type versioning configuration
+    //builder.ApiVersionReader = new MediaTypeApiVersionReader();
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
