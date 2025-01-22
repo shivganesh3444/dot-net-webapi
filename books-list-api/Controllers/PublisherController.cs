@@ -95,9 +95,9 @@ namespace books_list_api.Controllers
         }
 
         [HttpGet("get-all-publisher")]
-        public CustomActionResultType GetAllPublisher()
+        public CustomActionResultType GetAllPublisher(string sortBy, string searchString, int? pageNumber)
         {
-            List<Publisher> publishers = _publishersService.GetAllPublishers();
+            List<Publisher> publishers = _publishersService.GetAllPublishers(sortBy, searchString, pageNumber);
             if(publishers!=null && publishers.Count > 0)
             {
                 //return publishers;
@@ -115,7 +115,7 @@ namespace books_list_api.Controllers
 
                 CustomActionResultVM customActionResultVM = new CustomActionResultVM()
                 {
-                    Exception = new Exception("This exception is comming from customreturn type")
+                    Exception = new Exception("Sorry, we couldn't found publisher")
                 };
                 return new CustomActionResultType(customActionResultVM);
             }
