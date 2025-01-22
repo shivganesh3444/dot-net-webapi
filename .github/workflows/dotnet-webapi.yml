@@ -5,9 +5,10 @@ name: .NET
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: 
+      - main #trigger the pipleline on push to the main branch only
+  # pull_request:
+  #   branches: [ "main" ]
 
 jobs:
   build:
