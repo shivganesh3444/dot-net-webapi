@@ -95,10 +95,10 @@ namespace books_list_api.Controllers
         }
 
         [HttpGet("get-all-publisher")]
-        public CustomActionResultType GetAllPublisher(string sortBy, string searchString, int? pageNumber)
+        public CustomActionResultType GetAllPublisher(string sortBy ="ASC", string searchString = "", int? pageNumber = 1)
         {
             List<Publisher> publishers = _publishersService.GetAllPublishers(sortBy, searchString, pageNumber);
-            if(publishers!=null && publishers.Count > 0)
+            if (publishers != null && publishers.Count > 0)
             {
                 //return publishers;
 
@@ -107,7 +107,7 @@ namespace books_list_api.Controllers
                     Publishers = publishers
                 };
                 return new CustomActionResultType(customActionResultVM);
-               
+
             }
             else
             {
@@ -119,10 +119,23 @@ namespace books_list_api.Controllers
                 };
                 return new CustomActionResultType(customActionResultVM);
             }
-           
+
         }
 
+        //[HttpGet("get-all-publishers")]
+        //public IActionResult GetAllPublishers(string sortBy = "ASC")
+        //{
+        //    try
+        //    {
+        //        var _result = _publishersService.GetPublishers(sortBy);
+        //        return Ok(_result);
+        //    }
+        //    catch (Exception)
+        //    {
 
+        //        return BadRequest("Sorry, we could not load the publishers");
+        //    }
+        //}
         private bool StringStartWithNumber(string name)
         {
             return Regex.IsMatch(name, @"^\d");

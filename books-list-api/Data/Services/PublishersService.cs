@@ -70,6 +70,27 @@ namespace books_list_api.Data.Services
             }
        }
 
+        //public List<Publisher> GetPublishers(string sortBy)
+        //{
+        //    var allpublishers = _dbContext.Publishers.OrderBy(p => p.Name).ToList();
+
+
+        //    //sorting
+        //    if (!String.IsNullOrEmpty(sortBy))
+        //    {
+        //        switch (sortBy)
+        //        {
+        //            case "name_desc":
+        //                allpublishers = allpublishers.OrderByDescending(p => p.Name).ToList();
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+
+        //    return allpublishers;
+        //}
+
         public List<Publisher> GetAllPublishers(string sortBy, string searchString, int? pageNumber)
         {
             var allPublishers = _dbContext.Publishers.OrderBy(p => p.Name).ToList();
@@ -77,7 +98,8 @@ namespace books_list_api.Data.Services
             //sorting
             if (!String.IsNullOrEmpty(sortBy))
             {
-                switch (sortBy) {
+                switch (sortBy)
+                {
                     case "name_desc":
                         allPublishers = allPublishers.OrderByDescending(p => p.Name).ToList();
                         break;
