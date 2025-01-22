@@ -2,6 +2,7 @@ using books_list_api.Data;
 using books_list_api.Data.Services;
 using books_list_api.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,7 @@ builder.Services.AddApiVersioning(builder =>
 {
     builder.DefaultApiVersion = new ApiVersion(1, 0);
     builder.AssumeDefaultVersionWhenUnspecified = true;
+    builder.ApiVersionReader = new HeaderApiVersionReader("custom-version");
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
