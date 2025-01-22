@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace books_list_api.Controllers.V1
 {
     [ApiVersion("1.0")]
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
+    [Route("api/v{version:apiversion}/[controller]")]
     [ApiController]
     public class TestController : ControllerBase
     {
