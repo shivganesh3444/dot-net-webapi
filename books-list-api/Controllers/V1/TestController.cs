@@ -21,7 +21,7 @@ namespace books_list_api.Controllers.V1
         [HttpGet("get_message_1_0"), MapToApiVersion("1.0")]
         public IActionResult Get()
         {
-            _logger.LogInformation("Test Controller Visited From get_message_1_0");
+            _logger.LogInformation("Test Controller on 25/01/2025");
             return Ok("I am from version 1.0");
         }
 
