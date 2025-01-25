@@ -4,11 +4,22 @@ using books_list_api.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//configure serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration) // Read settings from appsettings.json
+    .Enrich.FromLogContext() //add contexual information
+    .WriteTo.Console()
+    .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day) // Log to rolling files
+    .CreateLogger();
 
+//add serilog to asp.net core pipeline
+builder.Host.UseSerilog();
+
+// Add services to the container.
 builder.Services.AddControllers();
 
 //configure connection string
