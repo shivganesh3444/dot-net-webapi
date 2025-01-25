@@ -9,7 +9,7 @@ namespace books_list_api.Controllers.V2
     [ApiController]
     public class TestController : ControllerBase
     {
-        [HttpGet("get-message"), MapToApiVersion("2.0")]
+        [HttpGet("get-messageV2"), MapToApiVersion("2.0")]
         public IActionResult Get()
         {
             return Ok("I am from version 2");
