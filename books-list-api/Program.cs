@@ -8,14 +8,13 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//configure serilog
+//configure serilog and read all the configuration from appsettings.json
 Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration) // Read settings from appsettings.json
-    .Enrich.FromLogContext() //add contexual information
-    .WriteTo.Console()
-    .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day) // Log to rolling files
+    .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
 
+//Remove default logging providers
+builder.Logging.ClearProviders();
 //add serilog to asp.net core pipeline
 builder.Host.UseSerilog();
 
